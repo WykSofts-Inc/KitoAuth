@@ -1,5 +1,5 @@
 //
-//  KitoCodeField.swift
+//  KitoAuthCodeField.swift
 //  KitoAuth
 //
 //  Created by Wycliff on 9/23/26.
@@ -20,7 +20,7 @@ public enum KitoCodeFieldState: Equatable, Sendable {
 /// Supports typing, paste (a whole SMS works: "Your code is 123-456"), iOS SMS autofill via
 /// `.oneTimeCode`, and VoiceOver, which reads it as one field ("3 of 6 digits entered").
 /// `onComplete` fires once when the last digit arrives.
-public struct KitoCodeField: View {
+public struct KitoAuthCodeField: View {
     @Binding var code: String
     let length: Int
     var state: KitoCodeFieldState

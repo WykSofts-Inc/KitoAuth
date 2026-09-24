@@ -116,7 +116,7 @@ public struct KitoOTPScreen: View {
                     }
 
                     ZStack {
-                        KitoCodeField(code: $code, length: length, state: fieldState, tint: tint) { submit($0) }
+                        KitoAuthCodeField(code: $code, length: length, state: fieldState, tint: tint) { submit($0) }
                             .authShake(shakes, reduceMotion: reduceMotion)
                             .scaleEffect(fieldState == .success && !reduceMotion ? 0.4 : 1)
                             .opacity(fieldState == .success ? 0 : 1)

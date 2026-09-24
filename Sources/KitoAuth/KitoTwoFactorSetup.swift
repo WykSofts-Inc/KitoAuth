@@ -175,7 +175,7 @@ public struct KitoTwoFactorSetup: View {
         VStack(spacing: theme.spacing.xl) {
             AuthHeader(symbol: "lock.shield", title: "Enter the code",
                        subtitle: "Type the 6-digit code \(issuer) shows in your authenticator app.", accent: palette.accent, onAccent: palette.onAccent)
-            KitoCodeField(code: $code, length: 6, state: codeState, tint: tint) { check($0) }
+            KitoAuthCodeField(code: $code, length: 6, state: codeState, tint: tint) { check($0) }
                 .authShake(shakes, reduceMotion: reduceMotion)
                 .overlay(alignment: .bottom) {
                     if isChecking { ProgressView().tint(palette.accent).offset(y: 34) }
