@@ -330,6 +330,14 @@ struct AnimatedMesh: View {
         ]
     }
 
+    /// Where orb `index` drifts to at `time`; split out so the compiler checks it quickly.
+    private static func orbOffset(index: Int, time t: Double) -> CGSize {
+        let i = Double(index)
+        let x: Double = cos(t + i * 1.6) * 110
+        let y: Double = sin(t * 0.8 + i) * 180
+        return CGSize(width: x, height: y)
+    }
+
     private func orbs(_ time: TimeInterval) -> some View {
         let t = time * 0.4
         return ZStack {
@@ -338,7 +346,7 @@ struct AnimatedMesh: View {
                 Circle()
                     .fill(colors[(index * 2 + 1) % colors.count])
                     .frame(width: 320, height: 320)
-                    .offset(x: CGFloat(cos(t + Double(index) * 1.6)) * 110, y: CGFloat(sin(t * 0.8 + Double(index))) * 180)
+                    .offset(Self.orbOffset(index: index, time: t))
                     .blur(radius: 70)
             }
             LinearGradient(colors: [.clear, .black.opacity(0.45)], startPoint: .center, endPoint: .bottom)
