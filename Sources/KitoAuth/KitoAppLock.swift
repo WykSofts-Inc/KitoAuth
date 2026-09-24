@@ -19,14 +19,17 @@ public struct KitoAppLockConfiguration: Sendable {
     /// Offer Face ID or Touch ID first when available.
     public var allowsBiometrics: Bool
     public var lockout: KitoLockoutPolicy
-    /// Where wrong attempts are remembered so relaunching doesn't reset a lockout. Nil keeps them in memory.
+    /// The `UserDefaults` key where wrong attempts are remembered, so relaunching doesn't reset a
+    /// lockout. Defaults to ``defaultStorageKey`` — namespaced by the bundle identifier. Give each
+    /// lock its own key (see ``storageKey(scope:bundle:)``) when an app has more than one, so one
+    /// lock's lockout doesn't carry over to another. Nil keeps attempts in memory only.
     public var storageKey: String?
     /// Blur the app in the app switcher and whenever it isn't active.
     public var blursInAppSwitcher: Bool
     public var tint: Color?
 
     public init(title: String = "Enter passcode", userName: String? = nil, pinLength: Int = 4, allowsBiometrics: Bool = true,
-                lockout: KitoLockoutPolicy = KitoLockoutPolicy(), storageKey: String? = "kito.appLock.lockout",
+                lockout: KitoLockoutPolicy = KitoLockoutPolicy(), storageKey: String? = KitoAppLockConfiguration.defaultStorageKey,
                 blursInAppSwitcher: Bool = true, tint: Color? = nil) {
         self.title = title
         self.userName = userName
@@ -36,6 +39,17 @@ public struct KitoAppLockConfiguration: Sendable {
         self.storageKey = storageKey
         self.blursInAppSwitcher = blursInAppSwitcher
         self.tint = tint
+    }
+
+    /// `"<bundle identifier>.kito.appLock.lockout"` — the key used when you don't pass one.
+    public static var defaultStorageKey: String { storageKey(scope: nil) }
+
+    /// A lockout key namespaced by `bundle`'s identifier and, optionally, a `scope` such as
+    /// `"payments"` — `"<bundle identifier>.kito.appLock.payments.lockout"`.
+    public static func storageKey(scope: String?, bundle: Bundle = .main) -> String {
+        let namespace = bundle.bundleIdentifier.flatMap { $0.isEmpty ? nil : $0 } ?? "app"
+        let scoped = scope.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.flatMap { $0.isEmpty ? nil : $0 }
+        return [namespace, "kito.appLock", scoped, "lockout"].compactMap { $0 }.joined(separator: ".")
     }
 }
 
