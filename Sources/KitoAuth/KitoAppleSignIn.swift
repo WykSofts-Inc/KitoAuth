@@ -252,6 +252,7 @@ struct ProviderCapsule<Logo: View>: View {
                         CheckmarkShape()
                             .stroke(.white, style: StrokeStyle(lineWidth: 3.5, lineCap: .round, lineJoin: .round))
                             .frame(width: 22, height: 22)
+                            .environment(\.layoutDirection, .leftToRight) // a tick never mirrors
                             .transition(.scale(scale: 0.3).combined(with: .opacity))
                     }
                 }
