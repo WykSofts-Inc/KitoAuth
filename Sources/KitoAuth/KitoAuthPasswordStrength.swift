@@ -1,5 +1,5 @@
 //
-//  KitoPasswordStrength.swift
+//  KitoAuthPasswordStrength.swift
 //  KitoAuth
 //
 //  Created by Wycliff on 9/23/26.
@@ -9,7 +9,7 @@
 import Foundation
 
 /// How hard a password is to guess, from nothing typed to strong.
-public enum KitoPasswordStrength: Int, Comparable, CaseIterable, Sendable {
+public enum KitoAuthPasswordStrength: Int, Comparable, CaseIterable, Sendable {
     case empty, weak, fair, good, strong
 
     public static func < (lhs: Self, rhs: Self) -> Bool { lhs.rawValue < rhs.rawValue }
@@ -59,7 +59,7 @@ public struct KitoPasswordRule: Identifiable, Sendable {
 
 /// The result of checking a password against a policy.
 public struct KitoPasswordEvaluation: Equatable, Sendable {
-    public let strength: KitoPasswordStrength
+    public let strength: KitoAuthPasswordStrength
     /// Raw points before mapping to a strength: length and character variety.
     public let score: Int
     /// IDs of the rules the password meets.
@@ -72,9 +72,9 @@ public struct KitoPasswordEvaluation: Equatable, Sendable {
 /// nothing from the common-password list.
 public struct KitoPasswordPolicy: Sendable {
     public var rules: [KitoPasswordRule]
-    public var minimumStrength: KitoPasswordStrength
+    public var minimumStrength: KitoAuthPasswordStrength
 
-    public init(rules: [KitoPasswordRule], minimumStrength: KitoPasswordStrength = .fair) {
+    public init(rules: [KitoPasswordRule], minimumStrength: KitoAuthPasswordStrength = .fair) {
         self.rules = rules
         self.minimumStrength = minimumStrength
     }
@@ -94,7 +94,7 @@ public struct KitoPasswordPolicy: Sendable {
 
     /// Scores length (8, 12, 16) plus one point for each character class beyond the first.
     /// Common passwords, one repeated character and simple runs like "abcd1234" stay weak.
-    static func strength(of password: String) -> (Int, KitoPasswordStrength) {
+    static func strength(of password: String) -> (Int, KitoAuthPasswordStrength) {
         guard !password.isEmpty else { return (0, .empty) }
         let length = password.count
         let lengthPoints = [8, 12, 16].filter { length >= $0 }.count
@@ -106,7 +106,7 @@ public struct KitoPasswordPolicy: Sendable {
         ].filter { $0 }.count
         let score = lengthPoints + max(0, classes - 1)
 
-        var strength: KitoPasswordStrength
+        var strength: KitoAuthPasswordStrength
         switch score {
         case ...1: strength = .weak
         case 2: strength = .fair

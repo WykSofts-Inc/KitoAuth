@@ -55,10 +55,10 @@ final class PasswordStrengthTests: XCTestCase {
     }
 
     func testStrengthsAreOrdered() {
-        XCTAssertLessThan(KitoPasswordStrength.weak, .fair)
-        XCTAssertLessThan(KitoPasswordStrength.good, .strong)
-        XCTAssertEqual(KitoPasswordStrength.strong.filledSegments, 4)
-        XCTAssertEqual(KitoPasswordStrength.fair.title, "Fair")
+        XCTAssertLessThan(KitoAuthPasswordStrength.weak, .fair)
+        XCTAssertLessThan(KitoAuthPasswordStrength.good, .strong)
+        XCTAssertEqual(KitoAuthPasswordStrength.strong.filledSegments, 4)
+        XCTAssertEqual(KitoAuthPasswordStrength.fair.title, "Fair")
     }
 
     func testChecklistTicksLive() {
@@ -202,6 +202,21 @@ final class LockoutTests: XCTestCase {
         let decoded = try JSONDecoder().decode(KitoLockoutState.self, from: JSONEncoder().encode(state))
         XCTAssertEqual(decoded, state)
         XCTAssertTrue(decoded.isLocked(at: start.addingTimeInterval(1)))
+    }
+
+    func testStorageKeyIsNamespacedByBundle() {
+        let key = KitoAppLockConfiguration.defaultStorageKey
+        XCTAssertNotEqual(key, "kito.appLock.lockout")
+        XCTAssertTrue(key.hasSuffix(".kito.appLock.lockout"))
+        XCTAssertEqual(KitoAppLockConfiguration().storageKey, key)
+        XCTAssertNil(KitoAppLockConfiguration(storageKey: nil).storageKey)
+    }
+
+    func testScopedStorageKeys() {
+        let payments = KitoAppLockConfiguration.storageKey(scope: "payments")
+        XCTAssertTrue(payments.hasSuffix(".kito.appLock.payments.lockout"))
+        XCTAssertNotEqual(payments, KitoAppLockConfiguration.storageKey(scope: "vault"))
+        XCTAssertEqual(KitoAppLockConfiguration.storageKey(scope: "  "), KitoAppLockConfiguration.defaultStorageKey)
     }
 }
 

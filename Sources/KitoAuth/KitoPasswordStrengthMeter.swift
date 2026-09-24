@@ -32,7 +32,7 @@ public struct KitoPasswordStrengthMeter: View {
 
     private var evaluation: KitoPasswordEvaluation { policy.evaluate(password) }
 
-    private func color(for strength: KitoPasswordStrength) -> Color {
+    private func color(for strength: KitoAuthPasswordStrength) -> Color {
         switch strength {
         case .empty: return theme.colors.border
         case .weak: return theme.colors.danger

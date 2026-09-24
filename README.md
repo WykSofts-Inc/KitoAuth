@@ -118,7 +118,10 @@ ContentView()
 Face ID or Touch ID first, then a PIN pad with a shake on a wrong PIN and a lockout after too many
 attempts (5 by default, then 30 s, 1 min, 5 min, 15 min). It locks when the app has been in the
 background for `timeout` seconds and blurs the app in the app switcher. Wrong attempts are kept in
-`UserDefaults` so relaunching doesn't reset a lockout. `KitoAppLockScreen` is available on its own
+`UserDefaults` so relaunching doesn't reset a lockout, under a key namespaced by your bundle
+identifier (`KitoAppLockConfiguration.defaultStorageKey`). If one app shows more than one lock,
+give each its own key — `storageKey: KitoAppLockConfiguration.storageKey(scope: "payments")` — or
+pass `storageKey: nil` to keep attempts in memory only. `KitoAppLockScreen` is available on its own
 too.
 
 ## Welcome screens
@@ -169,10 +172,19 @@ KitoRecoveryCodes.generate(count: 10)
 Everything reads `@Environment(\.kitoTheme)` from KitoCore. The accent is the theme's ink (black in
 light mode, white in dark), or pass `tint:` to any view.
 
+## Migrating to 0.2
+
+- `KitoPasswordStrength` is now `KitoAuthPasswordStrength`, so KitoAuth can be imported next to
+  KitoValidation (which has its own `KitoPasswordStrength`) without "ambiguous use" errors. The cases
+  and members are unchanged.
+- The app lock's default `storageKey` changed from the shared `"kito.appLock.lockout"` to
+  `"<bundle identifier>.kito.appLock.lockout"`. A lockout that was in progress under the old key is
+  not carried over; pass `storageKey: "kito.appLock.lockout"` to keep reading it.
+
 ## Installation
 
 ```swift
-.package(url: "https://github.com/WykSofts-Inc/KitoAuth.git", from: "0.1.0")
+.package(url: "https://github.com/WykSofts-Inc/KitoAuth.git", from: "0.2.0")
 ```
 
 iOS 17 or later. Depends only on [KitoCore](https://github.com/WykSofts-Inc/KitoCore).
