@@ -64,7 +64,7 @@ KitoOTPScreen(destination: "+254 712 345 678") { code in
 code is 123-456"), auto-submit, and a countdown ring on resend. The field is also available alone:
 
 ```swift
-KitoCodeField(code: $code, length: 6, state: state) { code in submit(code) }
+KitoAuthCodeField(code: $code, length: 6, state: state) { code in submit(code) }
 ```
 
 ## Forgot password
@@ -172,6 +172,12 @@ KitoRecoveryCodes.generate(count: 10)
 Everything reads `@Environment(\.kitoTheme)` from KitoCore. The accent is the theme's ink (black in
 light mode, white in dark), or pass `tint:` to any view.
 
+## Migrating to 0.3
+
+- `KitoCodeField` is now `KitoAuthCodeField`, so KitoAuth can be imported next to KitoFields
+  (which has its own `KitoCodeField`) without "ambiguous use" errors. Its initialiser is
+  unchanged, and `KitoCodeFieldState` keeps its name.
+
 ## Migrating to 0.2
 
 - `KitoPasswordStrength` is now `KitoAuthPasswordStrength`, so KitoAuth can be imported next to
@@ -184,7 +190,7 @@ light mode, white in dark), or pass `tint:` to any view.
 ## Installation
 
 ```swift
-.package(url: "https://github.com/WykSofts-Inc/KitoAuth.git", from: "0.2.0")
+.package(url: "https://github.com/WykSofts-Inc/KitoAuth.git", from: "0.3.0")
 ```
 
 iOS 17 or later. Depends only on [KitoCore](https://github.com/WykSofts-Inc/KitoCore).

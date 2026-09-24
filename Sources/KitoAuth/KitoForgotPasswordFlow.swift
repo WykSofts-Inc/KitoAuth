@@ -190,7 +190,7 @@ public struct KitoForgotPasswordFlow: View {
         VStack(spacing: theme.spacing.xl) {
             AuthHeader(symbol: "envelope.badge", title: "Check your email",
                        subtitle: "Enter the \(codeLength)-digit code we sent to\n\(trimmedEmail)", accent: palette.accent, onAccent: palette.onAccent)
-            KitoCodeField(code: $code, length: codeLength, state: codeState, tint: tint) { checkCode($0) }
+            KitoAuthCodeField(code: $code, length: codeLength, state: codeState, tint: tint) { checkCode($0) }
                 .authShake(codeShakes, reduceMotion: reduceMotion)
                 .overlay(alignment: .bottom) {
                     if isCheckingCode { ProgressView().tint(palette.accent).offset(y: 34) }
