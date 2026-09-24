@@ -61,7 +61,7 @@ passkeys need a `webcredentials:` Associated Domain, and Face ID needs
 
 - ``KitoOTPScreen``
 - ``KitoOTPChannel``
-- ``KitoCodeField``
+- ``KitoAuthCodeField``
 - ``KitoCodeFieldState``
 - ``KitoOTPCode``
 - ``KitoCountdownFormat``
