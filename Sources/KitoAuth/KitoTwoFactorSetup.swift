@@ -94,7 +94,7 @@ public struct KitoTwoFactorSetup: View {
                         AuthHaptics.tap()
                         withAnimation(.authSpring(reduceMotion, bounce: 0.15)) { _ = flow.back() }
                     } label: {
-                        Image(systemName: "chevron.left")
+                        Image(systemName: "chevron.backward")
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundStyle(theme.colors.onBackground)
                             .frame(width: 40, height: 40)
@@ -163,7 +163,7 @@ public struct KitoTwoFactorSetup: View {
                 LinkButton(title: "Open in authenticator app", accent: palette.accent) { openURL(url) }
             }
 
-            MorphButton(title: "Next", systemImage: "arrow.right", phase: .idle, accent: palette.accent, onAccent: palette.onAccent) {
+            MorphButton(title: "Next", systemImage: "arrow.forward", phase: .idle, accent: palette.accent, onAccent: palette.onAccent) {
                 withAnimation(.authSpring(reduceMotion, bounce: 0.15)) { _ = flow.advance() }
             }
         }

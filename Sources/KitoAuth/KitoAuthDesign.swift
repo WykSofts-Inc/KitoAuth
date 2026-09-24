@@ -94,6 +94,7 @@ struct SuccessBadge: View {
                 .trim(from: 0, to: isShown ? 1 : 0)
                 .stroke(.white, style: StrokeStyle(lineWidth: size * 0.075, lineCap: .round, lineJoin: .round))
                 .frame(width: size * 0.5, height: size * 0.5)
+                .environment(\.layoutDirection, .leftToRight) // a tick never mirrors
                 .animation(reduceMotion ? .linear(duration: 0.01) : .easeOut(duration: 0.35).delay(0.18), value: isShown)
         }
         .frame(width: size, height: size)
@@ -204,6 +205,7 @@ struct MorphButton: View {
                             .trim(from: 0, to: 1)
                             .stroke(.white, style: StrokeStyle(lineWidth: 3.5, lineCap: .round, lineJoin: .round))
                             .frame(width: 24, height: 24)
+                            .environment(\.layoutDirection, .leftToRight) // a tick never mirrors
                             .transition(.scale(scale: 0.3).combined(with: .opacity))
                     }
                 }

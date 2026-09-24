@@ -134,7 +134,7 @@ public struct KitoForgotPasswordFlow: View {
                 withAnimation(.authSpring(reduceMotion, bounce: 0.15)) { _ = flow.back() }
                 runner.reset()
             } label: {
-                Image(systemName: "chevron.left")
+                Image(systemName: "chevron.backward")
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(theme.colors.onBackground)
                     .frame(width: 40, height: 40)

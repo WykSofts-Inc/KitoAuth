@@ -83,6 +83,9 @@ public struct KitoAuthCodeField: View {
                 box(at: index)
             }
         }
+        // Codes are numbers, which read left to right in every script: keep the first digit on
+        // the left in right-to-left layouts too.
+        .environment(\.layoutDirection, .leftToRight)
         .accessibilityHidden(true)
     }
 

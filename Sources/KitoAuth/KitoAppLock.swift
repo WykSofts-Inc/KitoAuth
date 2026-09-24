@@ -177,6 +177,7 @@ public struct KitoAppLockScreen: View {
                     .animation(.authSpring(reduceMotion).delay(Double(index) * 0.03), value: status)
             }
         }
+        .environment(\.layoutDirection, .leftToRight) // digits fill left to right, like the keypad
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Passcode")
         .accessibilityValue("\(pin.count) of \(configuration.pinLength) digits entered")
@@ -336,6 +337,8 @@ struct PinPad: View {
         }
         .foregroundStyle(theme.colors.onBackground)
         .disabled(!isEnabled)
+        // A phone keypad keeps 1-2-3 left to right in every language, as the system one does.
+        .environment(\.layoutDirection, .leftToRight)
     }
 }
 

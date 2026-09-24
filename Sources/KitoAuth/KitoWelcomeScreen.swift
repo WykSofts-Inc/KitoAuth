@@ -284,6 +284,8 @@ struct GoogleLogo: View {
                     .offset(x: size * 0.23 - line * 0.1)
             }
             .frame(width: size, height: size)
+            // A brand mark: never mirrored in right-to-left layouts.
+            .environment(\.layoutDirection, .leftToRight)
         }
         .accessibilityHidden(true)
     }

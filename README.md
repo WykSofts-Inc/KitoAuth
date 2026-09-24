@@ -167,6 +167,14 @@ KitoRecoveryCodes.generate(count: 10)
 | Face ID | `NSFaceIDUsageDescription` in Info.plist. Without it the lock screen offers the PIN only |
 | Open Mail | Nothing for Mail. Other clients need their scheme in `LSApplicationQueriesSchemes` |
 
+## Right-to-left
+
+Screens mirror automatically in right-to-left layouts: step transitions slide the right way, the
+welcome carousel pages from the right, and back/next buttons use `chevron.backward` and
+`arrow.forward`. Things that must not mirror are pinned left to right: the code field's digit
+boxes, the app-lock keypad and passcode dots (numbers read left to right in every script), the
+Google "G" and the success ticks. Copy is English; localise the strings you pass in.
+
 ## Theming
 
 Everything reads `@Environment(\.kitoTheme)` from KitoCore. The accent is the theme's ink (black in
