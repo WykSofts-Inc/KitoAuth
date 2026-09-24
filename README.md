@@ -1,5 +1,7 @@
 # KitoAuth
 
+**[Documentation](https://wyksofts-inc.github.io/KitoAuth/documentation/kitoauth/)**
+
 Everything around sign-in for SwiftUI: Sign in with Apple, passkeys, one-time codes, password
 reset, magic links, an app lock with Face ID and a PIN pad, welcome screens and two-factor setup.
 Every screen springs, shakes on errors, morphs into a tick on success, plays haptics, and respects
